@@ -43,10 +43,6 @@ def write_to_excel(x):
     #df = pd.DataFrame({'Name': names, 'Product': scraped_product, 'Price': scraped_price, 'Product Num': scraped_item_num, 'Kirby Num': scraped_kirby_num, 'Kirby Price': scraped_kirby_price, 'Difference': difference_arr})
     df = pd.DataFrame({'Name': names, 'Product': scraped_product, 'Price': scraped_price, 'Product Num': scraped_item_num, 'Kirby Num': scraped_kirby_num, 'Kirby Price': scraped_kirby_price})
     df.to_excel(x + '.xlsx', index=False)
-
-#def price_difference(j, k):
- #   differences = j - k
-  #  difference_arr.append(differences)
     
 
 # selenium tools
@@ -73,8 +69,6 @@ def main(input, sheetName):
             lowes(page_source, line)
         elif 'grainger.com' in line:
             grainger(page_source, line)
-        elif 'kirbyrisk.com' in line:
-            kirby(page_source, line)
         elif line == '':
             quit()
 
@@ -132,18 +126,6 @@ def grainger(source, url):
 
     info = [name, product, price, item_num, url]
     #scraped_data.append(info)
-
-def kirby(source, url):
-    soup = BeautifulSoup(source, 'html.parser', on_duplicate_attribute='ignore')
-    price = soup.find('strong', attrs={'price'}).get_text()
-    price.replace('\n', '')
-    item_num = soup.find('span', attrs={'m-view'}).get_text()
-    item_num = item_num[14:]
-
-    info = [item_num, price]
-    #scraped_data.append(info)
-    scraped_kirby_num.append(item_num)
-    scraped_kirby_price.append(price)
 
 
 if __name__ == '__main__':
